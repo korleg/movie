@@ -2,15 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const DirectorSchema = new Schema ({
-    name: {
+    nameandsurname: {
         type: String,
         maxlength: 50,
         minlength:3,
-    },
-    surname: {
-        type: String,
-        maxlength: 50,
-        minlength:2,
+        unique: true
     },
     bio: {
         type: String,

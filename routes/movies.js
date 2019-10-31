@@ -43,9 +43,18 @@ router.get('/', (req, res) => {
 
 
 //Top 10 List
-router.get('/top10', (req,res)=>{
-  const promise = Movie.find({}).limit(10).sort({imdb: -1}); //imdb puanına göre büyükten küçüğe ilk 10 filmi sıraladı
+router.get('/imdb', (req,res)=>{
+  const promise = Movie.find({}).sort({imdb: -1}); //imdb puanına göre büyükten küçüğe ilk 10 filmi sıraladı
   promise.then((data)=>{
+    res.json(data)
+  }).catch((err)=>{
+    res.json(err)
+  });
+});
+
+router.get('/suc', (req,res)=> {
+  const promise = Movie.find({category2: 'Dram'}, );
+  promise.then((data)=> {
     res.json(data)
   }).catch((err)=>{
     res.json(err)

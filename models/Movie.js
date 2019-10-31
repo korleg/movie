@@ -6,10 +6,16 @@ const MovieSchema = new Schema ({
     title: {
         type: String,
         required: [true, '`{PATH}` alanı zorunludur.'],
-        maxlength: [20, '`{PATH}` alanına girilen (`{VALUE}`), ({MAXLENGTH}) den fazla olamaz.'],
-        minlength: [2, '`{PATH}` alanına girilen (`{VALUE}`), (`{MINLENGTH}`) den az olamaz.']
+        maxlength: [70, '`{PATH}` alanına girilen (`{VALUE}`), ({MAXLENGTH}) den fazla olamaz.'],
+        minlength: [2, '`{PATH}` alanına girilen (`{VALUE}`), (`{MINLENGTH}`) den az olamaz.'],
+        unique: true
     },
     category: {
+        type: String,
+        maxlength: 30,
+        minlength: 2
+    } ,
+    category2: {
         type: String,
         maxlength: 30,
         minlength: 2
@@ -34,6 +40,9 @@ const MovieSchema = new Schema ({
         type: Date,
         default: Date.now,
     },
+    thumbnail: String,
+    konu: String,
+    sure: String,
     
    
 });
