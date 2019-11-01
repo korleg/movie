@@ -13,7 +13,14 @@ router.post('/', (req, res, next)=> {
       res.json(err)
   });
 });
-
+router.get('/directors',(req,res)=> {
+    const promise = Director.find({});
+    promise.then((data)=>{
+        res.json(data);
+    }).catch((err)=> {
+        res.json(err)
+    });
+});
 router.get('/', (req,res)=>{
     const promise = Director.aggregate([
         {
@@ -27,7 +34,7 @@ router.get('/', (req,res)=>{
         {
             $unwind: {
                 path: '$filmleri',
-                preserveNullAndEmptyArrays: true //herhangi bir filmle eşleşmesi olmayan yönetmenleri görüntülemek için bu parametre girilir.
+                         //herhangi bir filmle eşleşmesi olmayan yönetmenleri görüntülemek için bu parametre girilir.
             }
         },
         {
@@ -39,7 +46,8 @@ router.get('/', (req,res)=>{
                     bio: '$bio'
                 },
                 movies: {
-                    $push: '$filmleri'
+                    $push: '$filmleri',
+                    preserveNullAndEmptyArrays: true
                 }
             }
         },

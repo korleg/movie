@@ -19,6 +19,16 @@ router.post('/', (req, res, next)=> {
   });
 });
 
+
+router.get('/', (req,res)=> {
+	const promise = Movie.find({});
+	promise.then((data)=> {
+		res.json(data);
+	}).catch((err)=>{
+		res.json(err)
+	})
+});
+
 //Alfabetik Sıralı Liste
 
 router.get('/alfabetik', (req, res) => {
