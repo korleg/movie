@@ -19,11 +19,10 @@ router.post('/', (req, res, next)=> {
   });
 });
 
-router.get('/', (req, res) => {
+//Alfabetik Sıralı Liste
+
+router.get('/alfabetik', (req, res) => {
 	const promise = Movie.aggregate([
-    {
-      
-    },
 		{
 			$lookup: {
 				from: 'directors',
@@ -34,7 +33,12 @@ router.get('/', (req, res) => {
 		},
 		{
 			$unwind: '$director'
-		}
+    },
+    {
+      $sort: {
+        title: 1
+      }
+    }
 	]);
 
 	promise.then((data) => {
@@ -44,16 +48,16 @@ router.get('/', (req, res) => {
 	})
 });
 
-//Alfabetik Sıralı Liste
 
-router.get('/alfabetik', (req,res)=>{
-  const promise = Movie.find({}).sort({title: 1}); 
-  promise.then((data)=>{
-    res.json(data)
-  }).catch((err)=>{
-    res.json(err)
-  });
-});
+
+// router.get('/alfabetik', (req,res)=>{
+//   const promise = Movie.find({}).sort({title: 1}); 
+//   promise.then((data)=>{
+//     res.json(data)
+//   }).catch((err)=>{
+//     res.json(err)
+//   });
+// });
 
 
 //IMDB sıralı liste
