@@ -21,6 +21,9 @@ router.post('/', (req, res, next)=> {
 
 router.get('/', (req, res) => {
 	const promise = Movie.aggregate([
+    {
+      
+    },
 		{
 			$lookup: {
 				from: 'directors',
@@ -41,17 +44,29 @@ router.get('/', (req, res) => {
 	})
 });
 
+//Alfabetik Sıralı Liste
 
-//IMDB sıralı liste
-
-router.get('/imdb', (req,res)=>{
-  const promise = Movie.find({}).sort({imdb: -1}); //imdb puanına göre büyükten küçüğe ilk 10 filmi sıraladı
+router.get('/alfabetik', (req,res)=>{
+  const promise = Movie.find({}).sort({title: 1}); 
   promise.then((data)=>{
     res.json(data)
   }).catch((err)=>{
     res.json(err)
   });
 });
+
+
+//IMDB sıralı liste
+
+router.get('/imdb', (req,res)=>{
+  const promise = Movie.find({}).sort({imdb: -1}); //imdb puanına göre büyükten küçüğe sıraladı
+  promise.then((data)=>{
+    res.json(data)
+  }).catch((err)=>{
+    res.json(err)
+  });
+});
+
 
 
 //Gizem Kategorisine Ait Liste
