@@ -48,18 +48,6 @@ router.get('/alfabetik', (req, res) => {
 	})
 });
 
-
-
-// router.get('/alfabetik', (req,res)=>{
-//   const promise = Movie.find({}).sort({title: 1}); 
-//   promise.then((data)=>{
-//     res.json(data)
-//   }).catch((err)=>{
-//     res.json(err)
-//   });
-// });
-
-
 //IMDB sıralı liste
 
 router.get('/imdb', (req,res)=>{
@@ -75,167 +63,525 @@ router.get('/imdb', (req,res)=>{
 
 //Gizem Kategorisine Ait Liste
 
-router.get('/gizem', (req,res)=> {
-  const promise = Movie.find({ $or: [ { category: "Gizem" }, { category2: 'Gizem' } ] } );
-  promise.then((data)=> {
-    res.json(data)
-  }).catch((err)=>{
-    res.json(err)
-  });
+router.get('/gizem', (req, res) => {
+	const promise = Movie.aggregate([
+		{
+			$lookup: {
+				from: 'directors',
+				localField: 'director_id',
+				foreignField: '_id',
+				as: 'director'
+			}
+		},
+		{
+			$unwind: '$director'
+    },
+    {
+      $sort: {
+        title: 1
+      }
+    },
+    {
+      $match: {
+        $or: [ { category: "Gizem" }, { category2: 'Gizem' } ]
+      }
+    }
+	]);
+
+	promise.then((data) => {
+		res.json(data);
+	}).catch((err) => {
+		res.json(err);
+	})
 });
+
 
 //Biyografi Kategorisine Ait Liste
 
-router.get('/biyografi', (req,res)=> {
-  const promise = Movie.find({ $or: [ { category: "Biyografi" }, { category2: 'Biyografi' } ] } );
-  promise.then((data)=> {
-    res.json(data)
-  }).catch((err)=>{
-    res.json(err)
-  });
+router.get('/biyografi', (req, res) => {
+	const promise = Movie.aggregate([
+		{
+			$lookup: {
+				from: 'directors',
+				localField: 'director_id',
+				foreignField: '_id',
+				as: 'director'
+			}
+		},
+		{
+			$unwind: '$director'
+    },
+    {
+      $sort: {
+        title: 1
+      }
+    },
+    {
+      $match: {
+        $or: [ { category: "Biyografi" }, { category2: 'Biyografi' } ]
+      }
+    }
+	]);
+
+	promise.then((data) => {
+		res.json(data);
+	}).catch((err) => {
+		res.json(err);
+	})
 });
 
 //Dram Kategorisine Ait Liste
 
-router.get('/dram', (req,res)=> {
-  const promise = Movie.find({ $or: [ { category: "Dram" }, { category2: 'Dram' } ] } );
-  promise.then((data)=> {
-    res.json(data)
-  }).catch((err)=>{
-    res.json(err)
-  });
+router.get('/dram', (req, res) => {
+	const promise = Movie.aggregate([
+		{
+			$lookup: {
+				from: 'directors',
+				localField: 'director_id',
+				foreignField: '_id',
+				as: 'director'
+			}
+		},
+		{
+			$unwind: '$director'
+    },
+    {
+      $sort: {
+        title: 1
+      }
+    },
+    {
+      $match: {
+        $or: [ { category: "Dram" }, { category2: 'Dram' } ]
+      }
+    }
+	]);
+
+	promise.then((data) => {
+		res.json(data);
+	}).catch((err) => {
+		res.json(err);
+	})
 });
+
 
 // Suç Kategorisine Ait Liste
 
-router.get('/suc', (req,res)=> {
-  const promise = Movie.find({ $or: [ { category: "Suç" }, { category2: 'Suç' } ] } );
-  promise.then((data)=> {
-    res.json(data)
-  }).catch((err)=>{
-    res.json(err)
-  });
+router.get('/suc', (req, res) => {
+	const promise = Movie.aggregate([
+		{
+			$lookup: {
+				from: 'directors',
+				localField: 'director_id',
+				foreignField: '_id',
+				as: 'director'
+			}
+		},
+		{
+			$unwind: '$director'
+    },
+    {
+      $sort: {
+        title: 1
+      }
+    },
+    {
+      $match: {
+        $or: [ { category: "Suç" }, { category2: 'Suç' } ]
+      }
+    }
+	]);
+
+	promise.then((data) => {
+		res.json(data);
+	}).catch((err) => {
+		res.json(err);
+	})
 });
+
 
 //Savaş Kategorisine Ait Liste
 
-router.get('/savas', (req,res)=> {
-  const promise = Movie.find({ $or: [ { category: "Savaş" }, { category2: 'Savaş' } ] } );
-  promise.then((data)=> {
-    res.json(data)
-  }).catch((err)=>{
-    res.json(err)
-  });
+router.get('/savas', (req, res) => {
+	const promise = Movie.aggregate([
+		{
+			$lookup: {
+				from: 'directors',
+				localField: 'director_id',
+				foreignField: '_id',
+				as: 'director'
+			}
+		},
+		{
+			$unwind: '$director'
+    },
+    {
+      $sort: {
+        title: 1
+      }
+    },
+    {
+      $match: {
+        $or: [ { category: "Savaş" }, { category2: 'Savaş' } ]
+      }
+    }
+	]);
+
+	promise.then((data) => {
+		res.json(data);
+	}).catch((err) => {
+		res.json(err);
+	})
 });
 
 //Komedi Kategorisine Ait Liste
 
-router.get('/komedi', (req,res)=> {
-  const promise = Movie.find({ $or: [ { category: "Komedi" }, { category2: 'Komedi' } ] } );
-  promise.then((data)=> {
-    res.json(data)
-  }).catch((err)=>{
-    res.json(err)
-  });
+router.get('/komedi', (req, res) => {
+	const promise = Movie.aggregate([
+		{
+			$lookup: {
+				from: 'directors',
+				localField: 'director_id',
+				foreignField: '_id',
+				as: 'director'
+			}
+		},
+		{
+			$unwind: '$director'
+    },
+    {
+      $sort: {
+        title: 1
+      }
+    },
+    {
+      $match: {
+        $or: [ { category: "Komedi" }, { category2: 'Komedi' } ]
+      }
+    }
+	]);
+
+	promise.then((data) => {
+		res.json(data);
+	}).catch((err) => {
+		res.json(err);
+	})
 });
+
 
 //Aksiyon Kategorisine Ait Liste
 
-router.get('/aksiyon', (req,res)=> {
-  const promise = Movie.find({ $or: [ { category: "Aksiyon" }, { category2: 'Aksiyon' } ] } );
-  promise.then((data)=> {
-    res.json(data)
-  }).catch((err)=>{
-    res.json(err)
-  });
+router.get('/aksiyon', (req, res) => {
+	const promise = Movie.aggregate([
+		{
+			$lookup: {
+				from: 'directors',
+				localField: 'director_id',
+				foreignField: '_id',
+				as: 'director'
+			}
+		},
+		{
+			$unwind: '$director'
+    },
+    {
+      $sort: {
+        title: 1
+      }
+    },
+    {
+      $match: {
+        $or: [ { category: "Aksiyon" }, { category2: 'Aksiyon' } ]
+      }
+    }
+	]);
+
+	promise.then((data) => {
+		res.json(data);
+	}).catch((err) => {
+		res.json(err);
+	})
 });
+
 
 //Gerilim Kategorisine Ait Liste
 
-router.get('/gerilim', (req,res)=> {
-  const promise = Movie.find({ $or: [ { category: "Gerilim" }, { category2: 'Gerilim' } ] } );
-  promise.then((data)=> {
-    res.json(data)
-  }).catch((err)=>{
-    res.json(err)
-  });
+router.get('/gerilim', (req, res) => {
+	const promise = Movie.aggregate([
+		{
+			$lookup: {
+				from: 'directors',
+				localField: 'director_id',
+				foreignField: '_id',
+				as: 'director'
+			}
+		},
+		{
+			$unwind: '$director'
+    },
+    {
+      $sort: {
+        title: 1
+      }
+    },
+    {
+      $match: {
+        $or: [ { category: "Gerilim" }, { category2: 'Gerilim' } ]
+      }
+    }
+	]);
+
+	promise.then((data) => {
+		res.json(data);
+	}).catch((err) => {
+		res.json(err);
+	})
 });
+
 
 //Animasyon Kategorisine Ait Liste
 
-router.get('/animasyon', (req,res)=> {
-  const promise = Movie.find({ $or: [ { category: "Animasyon" }, { category2: 'Animasyon' } ] } );
-  promise.then((data)=> {
-    res.json(data)
-  }).catch((err)=>{
-    res.json(err)
-  });
+router.get('/animasyon', (req, res) => {
+	const promise = Movie.aggregate([
+		{
+			$lookup: {
+				from: 'directors',
+				localField: 'director_id',
+				foreignField: '_id',
+				as: 'director'
+			}
+		},
+		{
+			$unwind: '$director'
+    },
+    {
+      $sort: {
+        title: 1
+      }
+    },
+    {
+      $match: {
+        $or: [ { category: "Animasyon" }, { category2: 'Animasyon' } ]
+      }
+    }
+	]);
+
+	promise.then((data) => {
+		res.json(data);
+	}).catch((err) => {
+		res.json(err);
+	})
 });
+
 
 //Macera Kategorisine Ait Liste
 
-router.get('/macera', (req,res)=> {
-  const promise = Movie.find({ $or: [ { category: "Macera" }, { category2: 'Macera' } ] } );
-  promise.then((data)=> {
-    res.json(data)
-  }).catch((err)=>{
-    res.json(err)
-  });
+router.get('/macera', (req, res) => {
+	const promise = Movie.aggregate([
+		{
+			$lookup: {
+				from: 'directors',
+				localField: 'director_id',
+				foreignField: '_id',
+				as: 'director'
+			}
+		},
+		{
+			$unwind: '$director'
+    },
+    {
+      $sort: {
+        title: 1
+      }
+    },
+    {
+      $match: {
+        $or: [ { category: "Macera" }, { category2: 'Macera' } ]
+      }
+    }
+	]);
+
+	promise.then((data) => {
+		res.json(data);
+	}).catch((err) => {
+		res.json(err);
+	})
 });
+
 
 //Aile Kategorisine Ait Liste
 
-router.get('/aile', (req,res)=> {
-  const promise = Movie.find({ $or: [ { category: "Aile" }, { category2: 'Aile' } ] } );
-  promise.then((data)=> {
-    res.json(data)
-  }).catch((err)=>{
-    res.json(err)
-  });
+router.get('/aile', (req, res) => {
+	const promise = Movie.aggregate([
+		{
+			$lookup: {
+				from: 'directors',
+				localField: 'director_id',
+				foreignField: '_id',
+				as: 'director'
+			}
+		},
+		{
+			$unwind: '$director'
+    },
+    {
+      $sort: {
+        title: 1
+      }
+    },
+    {
+      $match: {
+        $or: [ { category: "Aile" }, { category2: 'Aile' } ]
+      }
+    }
+	]);
+
+	promise.then((data) => {
+		res.json(data);
+	}).catch((err) => {
+		res.json(err);
+	})
 });
+
 
 //Korku Kategorisine Ait Liste
 
-router.get('/korku', (req,res)=> {
-  const promise = Movie.find({ $or: [ { category: "Korku" }, { category2: 'Korku' } ] } );
-  promise.then((data)=> {
-    res.json(data)
-  }).catch((err)=>{
-    res.json(err)
-  });
+router.get('/korku', (req, res) => {
+	const promise = Movie.aggregate([
+		{
+			$lookup: {
+				from: 'directors',
+				localField: 'director_id',
+				foreignField: '_id',
+				as: 'director'
+			}
+		},
+		{
+			$unwind: '$director'
+    },
+    {
+      $sort: {
+        title: 1
+      }
+    },
+    {
+      $match: {
+        $or: [ { category: "Korku" }, { category2: 'Korku' } ]
+      }
+    }
+	]);
+
+	promise.then((data) => {
+		res.json(data);
+	}).catch((err) => {
+		res.json(err);
+	})
 });
+
 
 //Bilimkurgu Kategorisine Ait Liste
 
-router.get('/bilimkurgu', (req,res)=> {
-  const promise = Movie.find({ $or: [ { category: "Bilimkurgu" }, { category2: 'Bilimkurgu' } ] } );
-  promise.then((data)=> {
-    res.json(data)
-  }).catch((err)=>{
-    res.json(err)
-  });
+router.get('/bilimkurgu', (req, res) => {
+	const promise = Movie.aggregate([
+		{
+			$lookup: {
+				from: 'directors',
+				localField: 'director_id',
+				foreignField: '_id',
+				as: 'director'
+			}
+		},
+		{
+			$unwind: '$director'
+    },
+    {
+      $sort: {
+        title: 1
+      }
+    },
+    {
+      $match: {
+        $or: [ { category: "Bilimkurgu" }, { category2: 'Bilimkurgu' } ]
+      }
+    }
+	]);
+
+	promise.then((data) => {
+		res.json(data);
+	}).catch((err) => {
+		res.json(err);
+	})
 });
+
 
 //Romantik Kategorisine Ait Liste
 
-router.get('/romantik', (req,res)=> {
-  const promise = Movie.find({ $or: [ { category: "Romantik" }, { category2: 'Romantik' } ] } );
-  promise.then((data)=> {
-    res.json(data)
-  }).catch((err)=>{
-    res.json(err)
-  });
+router.get('/romantik', (req, res) => {
+	const promise = Movie.aggregate([
+		{
+			$lookup: {
+				from: 'directors',
+				localField: 'director_id',
+				foreignField: '_id',
+				as: 'director'
+			}
+		},
+		{
+			$unwind: '$director'
+    },
+    {
+      $sort: {
+        title: 1
+      }
+    },
+    {
+      $match: {
+        $or: [ { category: "Romantik" }, { category2: 'Romantik' } ]
+      }
+    }
+	]);
+
+	promise.then((data) => {
+		res.json(data);
+	}).catch((err) => {
+		res.json(err);
+	})
 });
+
 //Fantastik Kategorisine Ait Liste
 
-router.get('/fantastik', (req,res)=> {
-  const promise = Movie.find({ $or: [ { category: "Fantastik" }, { category2: 'Fantastik' } ] } );
-  promise.then((data)=> {
-    res.json(data)
-  }).catch((err)=>{
-    res.json(err)
-  });
+router.get('/fantastik', (req, res) => {
+	const promise = Movie.aggregate([
+		{
+			$lookup: {
+				from: 'directors',
+				localField: 'director_id',
+				foreignField: '_id',
+				as: 'director'
+			}
+		},
+		{
+			$unwind: '$director'
+    },
+    {
+      $sort: {
+        title: 1
+      }
+    },
+    {
+      $match: {
+        $or: [ { category: "Fantastik" }, { category2: 'Fantastik' } ]
+      }
+    }
+	]);
+
+	promise.then((data) => {
+		res.json(data);
+	}).catch((err) => {
+		res.json(err);
+	})
 });
+
 
 
 router.get('/:movie_id', (req, res, next)=> {
