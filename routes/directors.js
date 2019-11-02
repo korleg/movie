@@ -34,7 +34,7 @@ router.get('/', (req,res)=>{
         {
             $unwind: {
                 path: '$filmleri',
-                         //herhangi bir filmle eşleşmesi olmayan yönetmenleri görüntülemek için bu parametre girilir.
+                preserveNullAndEmptyArrays: true    //herhangi bir filmle eşleşmesi olmayan yönetmenleri görüntülemek için bu parametre girilir.
             }
         },
         {
@@ -61,7 +61,7 @@ router.get('/', (req,res)=>{
         }
     ]);
     promise.then((data)=>{
-        res.json(data)
+        res.json(data[0])
     }).catch((err)=>{
         res.json(err)
     });

@@ -20,7 +20,7 @@ describe('/api/director tests',()=> {
     describe('/GET directors', ()=> {
         it('Burada Tüm Yönetmenler Gösterilecek', (done)=>{
             chai.request(server)
-                .get('/api/directors')
+                .get('/api/directors/directors')
                 .set('x-access-token', token)
                 .end((err,res)=>{
                     res.should.have.status(200);
@@ -33,8 +33,7 @@ describe('/api/director tests',()=> {
         it('Burada Yönetmen Eklenecek', (done)=> {
             const director = {
                 bio: 'this is great director',
-                name: 'Cristopher',
-                surname: 'Nolan',
+                nameandsurname: 'Cristopher Nolan',
             };
             chai.request(server)
                 .post('/api/directors')
@@ -43,8 +42,7 @@ describe('/api/director tests',()=> {
                 .end((err, res)=>{
                     res.should.have.status(200);
                     res.body.should.be.a('object');
-                    res.body.should.have.property('name');
-                    res.body.should.have.property('surname');
+                    res.body.should.have.property('nameandsurname');
                     res.body.should.have.property('bio');
                     directorId = res.body._id;
                     done();
@@ -66,9 +64,8 @@ describe('/api/director tests',()=> {
     describe('PUT/: director_id', ()=>{
         it('Burada Yönetmen güncellenecek', (done)=> {
             const director = {
-                bio: 'denemedirector',
-                name: 'Quentin',
-                surname: 'Tarantino',
+                bio: 'asdawd',
+                nameandsurname: 'tarantino',
             };
             chai.request(server)
                 .put('/api/directors/' + directorId)
@@ -77,10 +74,10 @@ describe('/api/director tests',()=> {
                 .end((err, res)=>{
                     res.should.have.status(200);
                     res.body.should.be.a('object');
-                    res.body.should.have.property('name').eql(director.name);
-                    res.body.should.have.property('surname').eql(director.surname);
+                    res.body.should.have.property('nameandsurname').eql(director.nameandsurname);
                     res.body.should.have.property('bio').eql(director.bio);
                     done();
+                    directorId = res.body._id;
                 });
         });
     });
