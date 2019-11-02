@@ -7,4 +7,7 @@ before_install:
 script:
   - npm test
 before_script: npm install -g mocha
-# before_script: chmod 0777 ./node_modules/.bin/mocha
+before_script: npm install -g chai
+before_script: npm install -g chai-http
+before_script: npm install -g should
+before_script: npm install -g typescript-require
