@@ -81,17 +81,17 @@ describe('/api/director tests',()=> {
                 });
         });
     });
-    // describe('/DELETE/:director_id', () => {
-	// 	it('Buradan director Silinecek', (done) => {
-	// 		chai.request(server)
-	// 			.delete('/api/directors/'+ directorId)
-	// 			.set('x-access-token', token)
-	// 			.end((err, res) => {
-	// 				res.should.have.status(200);
-	// 				res.body.should.be.a('object');
-	// 				res.body.should.have.property('status').eql('Yönetmen Silindi'); //dönen datada status adında property olmalı ve değeri 1 olmalı
-	// 				done();
-	// 			});
-	// 	});
-    // });
+    describe('/DELETE/:director_id', () => {
+		it('Buradan director Silinecek', (done) => {
+			chai.request(server)
+				.delete('/api/directors/'+ directorId)
+				.set('x-access-token', token)
+				.end((err, res) => {
+					res.should.have.status(200);
+					res.body.should.be.a('object');
+					res.body.should.have.property('status').eql('Yönetmen Silindi'); //dönen datada status adında property olmalı ve değeri 1 olmalı
+					done();
+				});
+		});
+    });
 });
