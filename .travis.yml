@@ -3,7 +3,11 @@ node_js:
   - 12
 before_install:
   - npm install
+  - npm install -g chai
+  - npm install -g chai-http
   - npm install -g mocha
+  - npm install -g should
+  - npm install -g typescript-require
   - export NODE_ENV=production
 script:
   - npm test
